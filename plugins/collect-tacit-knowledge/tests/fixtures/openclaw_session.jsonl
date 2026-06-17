@@ -1,0 +1,3 @@
+{"role":"human","message":"How should I cache big Float32 arrays? My key is sk-ABCDEF0123456789ABCDEF0123.","cwd":"/home/u/projects/demo","timestamp":"2026-06-17T09:00:00Z"}
+{"role":"ai","message":"Use OPFS over IndexedDB for large numeric blobs."}
+{"role":"event","message":"<tool invocation noise>"}

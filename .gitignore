@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.ctk-work/
+*.report.md
+.DS_Store

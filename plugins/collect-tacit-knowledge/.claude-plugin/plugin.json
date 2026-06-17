@@ -1,0 +1,10 @@
+{
+  "name": "collect-tacit-knowledge",
+  "description": "Extract transferable know-how (tacit knowledge) from your local LLM-CLI conversation history across tools and produce one anonymized, shareable report. Read-only, privacy-first, Python stdlib only.",
+  "version": "0.1.0",
+  "author": { "name": "Hanseulmaro Kim" },
+  "homepage": "https://github.com/honeymaro/agent-skills/tree/main/plugins/collect-tacit-knowledge",
+  "repository": "https://github.com/honeymaro/agent-skills",
+  "license": "MIT",
+  "keywords": ["tacit-knowledge", "know-how", "llm-cli", "claude-code", "codex", "report", "privacy"]
+}

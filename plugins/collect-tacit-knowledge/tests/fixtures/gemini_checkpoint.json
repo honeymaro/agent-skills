@@ -1,0 +1,5 @@
+[
+  {"role": "user", "parts": [{"text": "How should I cache big Float32 arrays? My key is sk-ABCDEF0123456789ABCDEF0123."}]},
+  {"role": "model", "parts": [{"text": "Prefer OPFS over IndexedDB for large numeric blobs."}, {"functionCall": {"name": "run_shell", "args": {"command": "ls"}}}]},
+  {"role": "user", "parts": [{"text": "Here is the patch:\n```python\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\nx = 1\n```\nThanks, it works."}]}
+]

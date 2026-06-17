@@ -1,0 +1,4 @@
+{"type":"user","cwd":"/home/u/projects/demo","sessionId":"sess-123","timestamp":"2026-06-17T09:00:00Z","message":{"role":"user","content":"Cache big Float32 arrays. My key is sk-ABCDEF0123456789ABCDEF0123."}}
+{"type":"assistant","sessionId":"sess-123","timestamp":"2026-06-17T09:00:05Z","message":{"role":"assistant","content":[{"type":"text","text":"Use OPFS over IndexedDB for large numeric blobs."},{"type":"tool_use","name":"Bash","input":{"command":"ls"}}]}}
+{"type":"file-history-snapshot","snapshot":{"huge":"noise"}}
+{"type":"user","sessionId":"sess-123","timestamp":"2026-06-17T09:00:10Z","message":{"role":"user","content":[{"type":"tool_result","content":"<10kb of file dump>"},{"type":"text","text":"Thanks, it works."}]}}

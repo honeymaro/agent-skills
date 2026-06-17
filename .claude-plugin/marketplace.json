@@ -1,0 +1,13 @@
+{
+  "name": "honeymaro-plugins",
+  "owner": { "name": "Hanseulmaro Kim" },
+  "description": "Hanseulmaro Kim's Claude Code plugins.",
+  "plugins": [
+    {
+      "name": "collect-tacit-knowledge",
+      "source": "./plugins/collect-tacit-knowledge",
+      "description": "Extract transferable know-how from local LLM-CLI conversation history into one anonymized, shareable report.",
+      "version": "0.1.0"
+    }
+  ]
+}

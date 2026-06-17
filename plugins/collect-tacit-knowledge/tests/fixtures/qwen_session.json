@@ -1,0 +1,11 @@
+{
+  "sessionId": "qwen-sess-42",
+  "projectHash": "abc123hash",
+  "startTime": "2026-06-17T09:00:00Z",
+  "messages": [
+    {"type": "user", "content": "How do I cache arrays? token AWS_SECRET=abcd1234abcd1234abcd1234"},
+    {"type": "qwen", "content": "Use OPFS for big numeric blobs."},
+    {"type": "tool", "content": "<10kb of file dump>"},
+    {"type": "user", "content": "Patch:\n```js\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\nconst a = 1;\n```\nThanks."}
+  ]
+}

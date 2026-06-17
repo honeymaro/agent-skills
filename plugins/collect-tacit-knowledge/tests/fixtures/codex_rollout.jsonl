@@ -1,0 +1,6 @@
+{"type":"message","role":"user","content":[{"type":"input_text","text":"How do I cache big Float32 arrays? My key is sk-ABCDEF0123456789ABCDEF0123."}],"cwd":"/home/u/projects/demo","timestamp":"2026-06-17T09:00:00Z"}
+{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Prefer OPFS over IndexedDB for big numeric blobs."}]}
+{"type":"function_call","name":"shell","arguments":"{\"cmd\":\"ls\"}"}
+{"type":"function_call_output","output":"<huge file dump>"}
+{"type":"message","role":"assistant","content":[{"type":"text","text":"Thanks, it works."}]}
+{"type":"reasoning","content":[{"type":"reasoning_text","text":"internal chain of thought that must be dropped"}]}
