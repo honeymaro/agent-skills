@@ -38,19 +38,23 @@ company/product/sensitive names you want force-masked. Encrypted sources (e.g. C
 desktop v2+) are not supported and are skipped.
 
 ## Supported tools
-See `docs/specs/...-design.md` §4. Tier 1 (JSONL): Claude Code, Codex, Copilot CLI, Factory,
-OpenClaw, Kimi, Vibe. Tier 2 (SQLite): Cursor, OpenCode, Crush, Hermes. Tier 3 (JSON/MD):
-Gemini, Qwen, Aider.
+JSONL: Claude Code, Codex, Copilot CLI, Factory, OpenClaw, Kimi, Vibe, **Antigravity**.
+SQLite: Cursor, OpenCode, Crush, Hermes. JSON/MD: Gemini, Qwen, Aider.
 
 ### Verification status
-- **Verified against real local data:** Claude Code, Gemini (real `~/.gemini/tmp/<hash>/chats/session-*.json`).
-- **Implemented to documented format (fixture-validated):** all others — Codex, Copilot CLI,
-  Factory, OpenClaw, Kimi, Vibe, Cursor, OpenCode, Crush, Hermes, Qwen, Aider. These are
-  validated by synthetic fixtures and not yet confirmed against real data on this machine.
+- **Verified against real local data:** Claude Code, **Codex** (rollout JSONL at
+  `~/.codex/sessions/Y/M/D/rollout-*.jsonl`), Gemini.
+- **Implemented to documented format (fixture-validated):** Copilot CLI, Factory, OpenClaw,
+  Kimi, Vibe, Cursor, OpenCode, Crush, Hermes, Qwen, Aider, Antigravity. Validated by
+  synthetic fixtures; not yet confirmed against real data here.
 
-Note: Codex's current path is the rollout JSONL at `~/.codex/sessions/...`. The legacy
-`~/.codex/logs_*.sqlite` on at least one machine was found to be a diagnostics log (no
-conversations), so the legacy adapter degrades to yielding nothing in that case.
+Notes:
+- **Gemini CLI was deprecated 2026-06-18** in favor of **Antigravity** (a VS Code fork).
+  The Gemini adapter still reads existing `~/.gemini/tmp/<hash>/chats/session-*.json`; the new
+  Antigravity adapter reads `<appData>/Antigravity/brain/<id>/.system_generated/logs/*.jsonl`
+  (documented format — no local Antigravity conversations to verify against yet).
+- Codex's legacy `~/.codex/logs_*.sqlite` is a Rust diagnostics log (no conversations), so the
+  legacy adapter degrades to yielding nothing.
 
 ## Layout (within the marketplace monorepo)
 ```

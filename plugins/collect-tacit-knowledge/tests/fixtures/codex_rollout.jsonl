@@ -1,6 +1,10 @@
-{"type":"message","role":"user","content":[{"type":"input_text","text":"How do I cache big Float32 arrays? My key is sk-ABCDEF0123456789ABCDEF0123."}],"cwd":"/home/u/projects/demo","timestamp":"2026-06-17T09:00:00Z"}
-{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Prefer OPFS over IndexedDB for big numeric blobs."}]}
-{"type":"function_call","name":"shell","arguments":"{\"cmd\":\"ls\"}"}
-{"type":"function_call_output","output":"<huge file dump>"}
-{"type":"message","role":"assistant","content":[{"type":"text","text":"Thanks, it works."}]}
-{"type":"reasoning","content":[{"type":"reasoning_text","text":"internal chain of thought that must be dropped"}]}
+{"timestamp":"2026-06-17T09:00:00Z","type":"session_meta","payload":{"id":"sess1","timestamp":"2026-06-17T09:00:00Z","cwd":"/home/dev/projects/acme","cli_version":"1.0","originator":"cli"}}
+{"timestamp":"2026-06-17T09:00:01Z","type":"event_msg","payload":{"type":"task_started"}}
+{"timestamp":"2026-06-17T09:00:02Z","type":"response_item","payload":{"type":"message","role":"developer","content":[{"type":"input_text","text":"<permissions instructions> sandbox stuff </permissions>"}]}}
+{"timestamp":"2026-06-17T09:00:03Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context><cwd>/home/dev/projects/acme</cwd></environment_context>"}]}}
+{"timestamp":"2026-06-17T09:00:04Z","type":"turn_context","payload":{"cwd":"/home/dev/projects/acme"}}
+{"timestamp":"2026-06-17T09:00:05Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"How do I cache big arrays? my key is sk-ABCDEF0123456789ABCDEF0123"}]}}
+{"timestamp":"2026-06-17T09:00:06Z","type":"event_msg","payload":{"type":"agent_message","message":"duplicate of the response_item below"}}
+{"timestamp":"2026-06-17T09:00:07Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Prefer OPFS for big numeric blobs."}]}}
+{"timestamp":"2026-06-17T09:00:08Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"command\":\"ls\"}"}}
+{"timestamp":"2026-06-17T09:00:09Z","type":"event_msg","payload":{"type":"token_count","input":10,"output":5}}

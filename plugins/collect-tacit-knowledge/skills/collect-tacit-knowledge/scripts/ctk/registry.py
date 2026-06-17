@@ -11,6 +11,7 @@ from ctk.providers.hermes import HermesAdapter
 from ctk.providers.opencode import OpenCodeAdapter
 from ctk.providers.cursor import CursorAdapter
 from ctk.providers.gemini import GeminiAdapter
+from ctk.providers.antigravity import AntigravityAdapter
 from ctk.providers.qwen import QwenAdapter
 from ctk.providers.aider import AiderAdapter
 
@@ -29,6 +30,7 @@ _ADAPTER_CLASSES = [
     OpenCodeAdapter,
     CursorAdapter,
     GeminiAdapter,
+    AntigravityAdapter,
     QwenAdapter,
     AiderAdapter,
 ]

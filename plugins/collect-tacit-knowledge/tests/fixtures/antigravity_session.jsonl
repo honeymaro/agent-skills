@@ -1,0 +1,4 @@
+{"role":"user","content":"How should I structure a large refactor? token sk-ABCDEF0123456789ABCDEF0123"}
+{"role":"model","content":[{"text":"Split it at type-checking checkpoints and keep a written plan."}]}
+{"type":"tool_call","name":"run_command","args":{"command":"ls"}}
+{"role":"assistant","parts":[{"text":"Verify each step before moving on."}]}

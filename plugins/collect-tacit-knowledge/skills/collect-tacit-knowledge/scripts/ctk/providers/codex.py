@@ -8,7 +8,7 @@ from ctk.text import extract_text, clean
 
 
 def _codex_text(content) -> str:
-    """Codex content blocks use input_text/output_text rather than "text"."""
+    """Codex message content blocks use input_text/output_text rather than "text"."""
     if isinstance(content, list):
         parts = []
         for b in content:
@@ -18,12 +18,19 @@ def _codex_text(content) -> str:
     return extract_text(content)
 
 
-class CodexAdapter(JsonlFileSessionAdapter):
-    """Current Codex format: ~/.codex/sessions/Y/M/D/rollout-*.jsonl.
+# Injected, non-conversational system context Codex prepends as user/developer
+# messages — dropped so they don't pollute the transcript.
+_INJECTED_PREFIXES = ("<environment_context>", "<permissions", "<user_instructions>")
 
-    One file == one session. Each line is a JSON record; only `message` records
-    with role user/assistant carry transcript text (function_call /
-    function_call_output / reasoning records are dropped)."""
+
+class CodexAdapter(JsonlFileSessionAdapter):
+    """Current Codex format: ~/.codex/sessions/Y/M/D/rollout-*.jsonl (VERIFIED).
+
+    One file == one session. Each line is {timestamp, type, payload}. Transcript
+    turns are `type == "response_item"` records whose `payload.type == "message"`
+    and `payload.role` is user/assistant (role `developer` is injected system text,
+    dropped; `event_msg`/`turn_context`/`function_call` records are skipped). The
+    session's working directory lives in the `session_meta` payload (`cwd`)."""
 
     name = "codex"
 
@@ -32,26 +39,34 @@ class CodexAdapter(JsonlFileSessionAdapter):
         return sorted(base.glob("**/rollout-*.jsonl")) if base.exists() else []
 
     def has_meta(self, rec) -> bool:
-        # Pick the first record bearing cwd (a rollout may start with header
-        # records that lack it); falls back to the first record otherwise.
-        return isinstance(rec, dict) and bool(rec.get("cwd"))
+        # session_meta (and turn_context) carry cwd inside payload.
+        pl = rec.get("payload") if isinstance(rec, dict) else None
+        return isinstance(pl, dict) and bool(pl.get("cwd"))
 
     def turn_of(self, rec) -> Optional[Turn]:
-        if rec.get("type") != "message":
+        if rec.get("type") != "response_item":
             return None
-        role = rec.get("role")
-        if role not in ("user", "assistant"):
+        pl = rec.get("payload")
+        if not isinstance(pl, dict) or pl.get("type") != "message":
             return None
-        text = clean(_codex_text(rec.get("content")))
+        if pl.get("role") not in ("user", "assistant"):
+            return None
+        text = _codex_text(pl.get("content"))
+        if text.strip().startswith(_INJECTED_PREFIXES):
+            return None
+        text = clean(text)
         if not text.strip():
             return None
-        return Turn(role=role, text=text)
+        return Turn(role=pl["role"], text=text)
 
-    def project_path(self, path, first) -> Optional[str]:
-        return (first or {}).get("cwd")
+    def project_path(self, path, meta) -> Optional[str]:
+        pl = (meta or {}).get("payload") if isinstance(meta, dict) else None
+        return (pl or {}).get("cwd")
 
-    def started_at(self, path, first) -> Optional[str]:
-        return (first or {}).get("timestamp")
+    def started_at(self, path, meta) -> Optional[str]:
+        if not isinstance(meta, dict):
+            return None
+        return meta.get("timestamp") or (meta.get("payload") or {}).get("timestamp")
 
 
 class CodexLegacyAdapter(SqliteAdapter):

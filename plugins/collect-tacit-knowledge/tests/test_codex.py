@@ -13,10 +13,12 @@ class TestCodexRollout(unittest.TestCase):
     def test_rollout_parses_text_turns(self):
         s = list(CodexAdapter().parse(FIXTURE))[0]
         self.assertEqual(s.provider, "codex")
-        self.assertEqual([t.role for t in s.turns], ["user", "assistant", "assistant"])
+        # developer + injected <environment_context> user message dropped -> [user, assistant]
+        self.assertEqual([t.role for t in s.turns], ["user", "assistant"])
         joined = "\n".join(t.text for t in s.turns)
         self.assertIn("OPFS", joined)
-        self.assertEqual(s.project, "/home/u/projects/demo")
+        # cwd read from session_meta.payload, started_at from session_meta timestamp
+        self.assertEqual(s.project, "/home/dev/projects/acme")
         self.assertEqual(s.started_at, "2026-06-17T09:00:00Z")
 
     def test_rollout_masks_secret_and_drops_noise(self):
@@ -24,10 +26,11 @@ class TestCodexRollout(unittest.TestCase):
         joined = "\n".join(t.text for t in s.turns)
         # secret masked by clean()
         self.assertNotIn("sk-ABCDEF0123456789", joined)
-        # function_call / function_call_output / reasoning dropped
-        self.assertNotIn("file dump", joined)
-        self.assertNotIn("chain of thought", joined)
-        self.assertNotIn("ls", [t.text for t in s.turns])
+        # developer role, function_call, event_msg, and <environment_context> dropped
+        self.assertNotIn("permissions", joined)
+        self.assertNotIn("environment_context", joined)
+        self.assertNotIn("command", joined)
+        self.assertNotIn("duplicate of the response_item", joined)
 
 
 class TestCodexLegacyFixture(unittest.TestCase):
@@ -90,6 +93,29 @@ class TestCodexLegacyFixture(unittest.TestCase):
             self.assertEqual(list(CodexLegacyAdapter([p]).parse(p)), [])
         finally:
             os.unlink(p)
+
+
+REAL_SESSIONS_DIR = os.path.expanduser(os.path.join("~", ".codex", "sessions"))
+
+
+@unittest.skipUnless(os.path.isdir(REAL_SESSIONS_DIR), "no real ~/.codex/sessions present")
+class TestCodexRolloutLive(unittest.TestCase):
+    """Runs against real rollout files when present (verified format)."""
+
+    def test_real_rollouts_parse_cleanly(self):
+        import glob
+        files = sorted(glob.glob(os.path.join(REAL_SESSIONS_DIR, "**", "rollout-*.jsonl"), recursive=True))
+        if not files:
+            self.skipTest("no rollout files yet")
+        total_turns = 0
+        for f in files[:5]:
+            for s in CodexAdapter().parse(f):
+                self.assertEqual(s.provider, "codex")
+                for t in s.turns:
+                    self.assertIn(t.role, ("user", "assistant"))
+                total_turns += len(s.turns)
+        # at least one real rollout should yield conversation turns
+        self.assertGreater(total_turns, 0)
 
 
 REAL_LEGACY_DB = os.path.expanduser(os.path.join("~", ".codex", "logs_1.sqlite"))
