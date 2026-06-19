@@ -1,5 +1,7 @@
 # collect-tacit-knowledge
 
+![collect-tacit-knowledge — distill tacit knowledge from your coding-agent chats into one report](assets/thumbnail.png)
+
 Extract transferable know-how from your local LLM-CLI conversation logs and produce one
 anonymized, shareable one-page report. **Read-only. Privacy-first. Python stdlib only.**
 
